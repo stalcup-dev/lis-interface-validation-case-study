@@ -1,303 +1,549 @@
-# APCM Revenue Integrity Case Study
+# LIS Interface Validation Case Study
 
-**Independent RCM problem-solving demonstration by Allen Stalcup**
+**Laboratory Information Systems | HL7 v2 | Clinical Applications | Interface Validation | Laboratory Operations**
 
-**Revenue Cycle Management | Revenue Integrity | Medicare APCM | Healthcare Operations**
+A clinical systems case study showing how laboratory domain knowledge, interface troubleshooting, and structured root-cause analysis can be used to protect clinical meaning across the **EHR → interface → LIS → laboratory → EHR** workflow.
 
-[**View the Full Case Study (PDF)**](./Allen_Stalcup_APCM_Revenue_Integrity_Case_Study_Portfolio.pdf)
+## Full Case Study
+
+**[View the Laboratory Interface Safety & TAT Diagnostic Framework (PDF)](./allen_stalcup_lis_case_study.pdf)**
+
+> **Core idea:** A successful interface transmission does not necessarily mean the clinical workflow succeeded. Patient identity, order relationships, specimen tracking, result interpretation, timestamps, and final presentation all have to remain correct from end to end.
 
 ---
 
-## Executive Summary
-
-This portfolio case study demonstrates how I would investigate a current **Advanced Primary Care Management (APCM)** billing concern from a Revenue Cycle Management and revenue integrity perspective.
-
-The scenario was prompted by public reporting involving Medicare patients who reported receiving recurring APCM-related cost-sharing charges they did not clearly understand or remember authorizing.
-
-Rather than assume the charges were correct or incorrect, I approached the issue as an RCM analyst would:
-
-> **Determine what should have happened, test what actually happened, quantify the variance, identify the root cause, and design controls that prevent recurrence.**
-
-The result is an evidence-driven investigation framework connecting:
-
-**Clinical operations -> documentation -> patient consent -> coding -> claims -> payer adjudication -> patient responsibility -> compliance risk -> financial impact**
-
-## The Business Problem
-
-APCM allows eligible primary care practices to receive monthly Medicare reimbursement for ongoing patient-management activities performed outside of traditional office visits.
-
-The billing model creates an important revenue opportunity for primary care organizations, but it also introduces operational risk.
-
-A technically payable claim may still require investigation if:
-
-- Patient consent cannot be demonstrated
-- APCM is billed after a patient opts out
-- The wrong APCM level is selected
-- Multiple APCM claims are submitted for the same patient-month
-- Eligibility requirements are not supported
-- Patient responsibility is calculated incorrectly
-- QMB protections are not applied correctly
-- Clinical, billing, and enrollment systems fall out of sync
-
-The central revenue-integrity question becomes:
-
-> **Is the revenue earned, supported, compliant, collectible, and defensible?**
-
-## North Star
-
-### Decision
-
-Determine whether APCM revenue is properly supported and defensible.
-
-### Threshold
-
-Identify patient-months failing eligibility, consent, coding, opt-out, duplicate-billing, or patient-balance controls.
-
-### Action
-
-Correct affected accounts, quantify financial exposure, identify systemic root causes, and implement controls that prevent recurrence.
-
-## How I Would Investigate the Issue
-
-### 1. Define the affected population
-
-Extract all APCM patient-months within the review period, including:
-
-- Patient identifier
-- Date of service
-- Service month
-- APCM HCPCS code
-- Rendering / billing provider
-- Payer
-- Charge amount
-- Allowed amount
-- Medicare payment
-- Secondary payment
-- Patient responsibility
-- Claim status
-- Practice location
-
-### 2. Reconcile claims to clinical and enrollment evidence
-
-Join claims against relevant EHR and eligibility information:
-
-- APCM consent date
-- Consent method
-- Opt-out date
-- Chronic-condition status
-- QMB status
-- Responsible PCP
-- Enrollment status
-- Required clinical documentation
-- Relevant initiating visit information
-
-This creates a patient-month view that connects **what was billed** with **the evidence supporting the bill**.
-
-### 3. Run exception tests
-
-The analysis would flag conditions such as:
-
-| Exception Test | Question |
-|---|---|
-| `consent_missing` | Was APCM billed without documented consent? |
-| `consent_after_claim` | Was the first APCM claim submitted before consent was captured? |
-| `billed_after_opt_out` | Was APCM billed after the patient discontinued the service? |
-| `duplicate_patient_month` | Was more than one APCM service billed for the same patient-month? |
-| `incorrect_apcm_level` | Does the billed APCM level match documented patient eligibility? |
-| `qmb_patient_balance` | Was prohibited Medicare cost sharing assigned to a QMB beneficiary? |
-| `eligibility_exception` | Does the record fail required eligibility or documentation criteria? |
-
-### 4. Quantify exposure
-
-Exceptions would then be translated into decision-ready metrics:
-
-- Total APCM patient-months reviewed
-- Clean patient-month rate
-- Exception rate
-- Claims requiring coding review
-- Claims requiring refund / adjustment review
-- Patient-balance exposure
-- Gross allowed-amount exposure
-- Exception concentration by provider or location
-- Root-cause concentration
-
-This moves the conversation from:
-
-> "Some patients complained about a bill."
-
-To:
-
-> **"Here is the size, pattern, financial exposure, and likely cause of the control failure."**
-
-### 5. Identify the root cause
-
-The goal is not simply to correct individual claims.
-
-The stronger question is:
-
-> **Why was the system capable of producing the exception?**
-
-Potential root causes could include:
-
-- Consent workflow disconnected from billing
-- Enrollment data not synchronized with the EHR
-- Opt-out status not communicated to the billing system
-- Manual coding variation
-- Eligibility logic applied inconsistently
-- QMB status not checked before patient statements
-- Inadequate exception reporting
-- Patient communication that does not clearly explain recurring cost sharing
-
-### 6. Install controls
-
-A mature response includes **preventive, detective, and corrective controls**.
-
-#### Preventive controls
-
-- Block APCM claim generation when required consent is absent
-- Prevent billing after an effective opt-out date
-- Validate eligibility before code assignment
-- Validate QMB status before patient responsibility is generated
-
-#### Detective controls
-
-- Monthly APCM exception report
-- Duplicate patient-month monitoring
-- Consent-to-claim reconciliation
-- Provider/location exception trending
-- Patient-balance audits
-
-#### Corrective controls
-
-- Claim adjustment workflow
-- Patient balance correction
-- Refund review
-- Coding/compliance escalation
-- Root-cause remediation
-- Staff education when workflow failures are identified
-
-## Executive Output
-
-The final product should not be a spreadsheet full of exceptions.
-
-Leadership needs a decision pack answering:
-
-**What happened?**
-
-**How widespread is it?**
-
-**What is the financial and compliance exposure?**
-
-**Why did it happen?**
-
-**What should we do now?**
-
-**What control prevents it from happening again?**
-
-The accompanying case study demonstrates how I would translate detailed RCM analysis into that executive-level output.
-
-### [Open the Full APCM Revenue Integrity Case Study](./Allen_Stalcup_APCM_Revenue_Integrity_Case_Study_Portfolio.pdf)
-
-## Capabilities Demonstrated
-
-This case study is designed to demonstrate practical capability across:
-
-- **Revenue Cycle Management**
-- **Revenue Integrity**
-- **Medicare billing analysis**
-- **Claims-to-clinical reconciliation**
-- **Healthcare data analysis**
-- **Patient financial responsibility**
-- **Billing and coding controls**
-- **Compliance-oriented exception testing**
-- **Root-cause analysis**
-- **Financial-risk quantification**
-- **Operational process improvement**
-- **Executive communication**
-- **Control design and monitoring**
-
-The objective is not simply to identify unusual data.
-
-It is to convert healthcare revenue-cycle data into **actionable operational decisions**.
-
-## Why This Case Matters
-
-Healthcare revenue problems rarely exist entirely inside the billing department.
-
-A single recurring charge can involve:
-
-**Patient experience -> Clinical workflow -> Documentation -> Consent -> Coding -> Claims -> Payer rules -> Patient responsibility -> Compliance -> Cash**
-
-Strong revenue-cycle analysis requires understanding those relationships rather than treating claims as isolated transactions.
-
-This case demonstrates that end-to-end perspective.
-
-## Portfolio Disclaimer
-
-This is an **independent portfolio case study created by Allen Stalcup to demonstrate how I would approach and solve a real-world Revenue Cycle Management problem**.
-
-The scenario was inspired by publicly available reporting and Medicare guidance.
-
-I am not affiliated with, employed by, or acting on behalf of the healthcare organization discussed in the source reporting. I did not access the organization's claims systems, EHR, internal records, financial information, or patient information.
-
-**No protected health information (PHI) is included.**
-
-Any patient-level records, exception counts, financial figures, operational findings, or analytical results used to demonstrate the methodology are **synthetic and illustrative**.
-
-The case study does **not** make a finding that any specific healthcare organization violated Medicare requirements or engaged in improper billing.
-
-Its purpose is to demonstrate the analytical framework I would use to determine the facts.
-
-**Case-study snapshot: August 2026**
-
-## Primary Reference Framework
-
-The analysis is grounded primarily in:
-
-- Centers for Medicare & Medicaid Services guidance for **Advanced Primary Care Management Services**
-- Medicare guidance concerning **Qualified Medicare Beneficiary (QMB)** cost-sharing protections
-- Public reporting describing the patient-billing scenario used to frame the case
-
-Regulatory requirements and payer guidance can change over time. Production analysis should always validate requirements against the guidance applicable to the dates of service under review.
-
-## About the Author
-
-### Allen Stalcup
-
-I bring a combination of **clinical healthcare experience, Revenue Cycle Management knowledge, and analytical problem-solving**.
-
-My background includes outpatient healthcare experience, ASCP Medical Laboratory Technician certification, and formal Revenue Cycle, Billing & Coding education.
-
-I am particularly interested in healthcare roles where domain knowledge and systems thinking can improve:
-
-- Revenue integrity
-- Clinical operations
-- Healthcare applications and workflows
-- Quality and compliance
-- Billing operations
-- Process improvement
-- Patient financial experience
-
-My approach is simple:
-
-> **Understand the operational problem first. Use data to determine what is happening. Then build the smallest reliable control that improves the decision.**
-
-## Repository Contents
+## Case at a Glance
+
+A laboratory's overall turnaround time increased by **71%**, initially pointing attention toward chemistry operations.
+
+Instead of assuming the analytical laboratory was responsible, the investigation decomposed the workflow into individual stages and followed the evidence until the delay could be localized.
+
+### Simulated findings
+
+| Finding | Result |
+|---|---:|
+| Overall TAT | 49 → 84 min |
+| Collection → lab receipt | 18 → 54 min |
+| Lab receipt → final result | 31 → 30 min |
+| Satellite Clinic transport | 24 → 96 min |
+| Send-out staging delay | 37 → 16 min after intervention |
+| Send-out SLA compliance | 72% → 96% |
+
+The analytical laboratory remained essentially stable.
+
+The primary deterioration occurred **upstream of testing**, eventually localizing to specimen transportation and send-out workflow controls.
+
+---
+
+## What This Project Demonstrates
+
+- Laboratory Information System workflow analysis
+- HL7 v2 laboratory result interpretation
+- LIS/EHR interface troubleshooting
+- ORU message and ACK tracing
+- Patient identity integrity
+- Order and accession relationship validation
+- Laboratory test-code mapping
+- Critical-result interpretation preservation
+- Clinical timestamp validation
+- Turnaround-time decomposition
+- Root-cause localization
+- Interface exception handling
+- Negative and regression testing
+- Change-control planning
+- Canary validation and rollback thinking
+- Laboratory operations improvement
+
+---
+
+## System Boundary
 
 ```text
-.
-|-- README.md
-`-- Allen_Stalcup_APCM_Revenue_Integrity_Case_Study_Portfolio.pdf
+Provider
+   │
+   ▼
+  EHR
+   │
+   │ Order
+   ▼
+Interface Engine
+   │
+   ▼
+  LIS
+   │
+   ├────► Middleware ────► Analyzer
+   │                         │
+   ◄─────────────────────────┘
+   │
+   │ Result
+   ▼
+Interface Engine
+   │
+   ▼
+  EHR
+   │
+   ▼
+Clinician
 ```
 
-The PDF contains the complete investigation framework, illustrative analytical workup, control recommendations, remediation roadmap, and executive decision structure.
+At each boundary, the investigation asks whether the clinical meaning remains intact:
 
-## Recruiter / Hiring Manager Note
+```text
+Patient identity
+      ↓
+Order identity
+      ↓
+Specimen / accession
+      ↓
+Test mapping
+      ↓
+Result value
+      ↓
+Units / reference range
+      ↓
+Abnormal / critical interpretation
+      ↓
+Result status
+      ↓
+Clinical timestamps
+      ↓
+Final destination
+```
 
-This project is intended to show more than familiarity with healthcare data.
+---
 
-It demonstrates how I would enter an ambiguous, current healthcare revenue problem and structure it into:
+## Investigation
 
-**Rule -> Evidence -> Test -> Exception -> Financial Impact -> Root Cause -> Control -> Decision**
+### 1. Validate the data before using the metric
 
-That is the standard I aim to bring to healthcare operations and revenue-cycle work.
+Before analyzing turnaround time, the case first establishes that the timestamps and transactions being measured represent the expected clinical events.
+
+A dashboard built on incorrect interface data can create a highly confident wrong conclusion.
+
+> **Control:** Verify the integrity and meaning of the underlying transactions before using them for operational decisions.
+
+### 2. Decompose total turnaround time
+
+The initial assumption was that chemistry processing had become slower.
+
+Breaking the metric into components showed otherwise:
+
+```text
+LAST MONTH
+
+Collection → Receipt     18 min
+Receipt → Final          31 min
+
+
+THIS MONTH
+
+Collection → Receipt     54 min  ← deterioration
+Receipt → Final          30 min  ← stable
+```
+
+The evidence did not support changing chemistry operations.
+
+The investigation moved upstream.
+
+### 3. Localize the failure
+
+Performance was then segmented by location:
+
+```text
+Emergency Department       Stable
+Inpatient Floors           Stable
+Main Outpatient Clinic     Stable
+Satellite Clinic           24 → 96 min
+```
+
+The problem was no longer:
+
+> "Laboratory TAT is getting worse."
+
+It became:
+
+> **"Pre-analytic delay is concentrated at the Satellite Clinic."**
+
+Further decomposition showed that collection-to-pickup remained stable while **courier pickup-to-lab-receipt deteriorated sharply**.
+
+### 4. Separate systemic deterioration from exceptions
+
+Most specimens still traveled normally.
+
+A subset experienced delays of roughly **150–210 minutes**.
+
+The delayed cases were segmented by:
+
+- location
+- collection time
+- courier run
+- route
+- specimen type
+- destination
+- shift/day
+- pickup and receipt timestamps
+
+The pattern eventually concentrated around specific scheduled courier runs.
+
+> **Principle:** Patterns generate hypotheses. Transaction-level evidence assigns ownership.
+
+### 5. Contain before redesigning
+
+Once missed transport runs were identified as a credible failure mode, the safer sequence was:
+
+```text
+Detect risk
+   ↓
+Contain the failure
+   ↓
+Verify root cause
+   ↓
+Correct the process
+   ↓
+Validate the change
+   ↓
+Monitor for recurrence
+```
+
+Backup coverage and missed-pickup escalation could protect the workflow while the underlying scheduling or transport issue was investigated.
+
+---
+
+## A Second Failure Population
+
+After the primary transport issue was addressed, another group of delayed specimens remained.
+
+All were microbiology send-outs.
+
+That changed the question from:
+
+> "Why are these specimens outliers?"
+
+to:
+
+> **"Do these specimens belong to a different workflow population?"**
+
+They did.
+
+The send-out process was decomposed:
+
+```text
+Collection → clinic pickup          11 min
+Clinic pickup → main lab            18 min
+Main lab → send-out staging         37 min  ← opportunity
+Staging → reference courier          8 min
+```
+
+Further inspection showed that much of the 37-minute interval was not active processing.
+
+It was **batch waiting**.
+
+### Operational decision
+
+Moving every specimen immediately would minimize delay but increase staff burden unnecessarily.
+
+Keeping the existing 30-minute batching interval would preserve efficiency but continue missing the desired service level.
+
+The proposed compromise:
+
+> **Reduce the staging batch interval to 10 minutes and measure both service performance and labor impact.**
+
+### Simulated post-change result
+
+```text
+SLA compliance
+72% → 96%
+
+Main lab → staging
+37 min → 16 min
+
+Staging trips/day
+12 → 30
+
+Overtime
+No meaningful increase
+```
+
+The goal was not to create the fastest theoretically possible workflow.
+
+It was to find the **lowest-cost process that reliably met the required operating standard**.
+
+---
+
+# Interface Safety Controls
+
+Operational performance is only one part of the case.
+
+The second part examines whether the interface preserves clinical meaning.
+
+## Example HL7 v2 Result
+
+```hl7
+MSH|^~\&|LAB_LIS|LAB|EHR|HOSPITAL|202608181451||ORU^R01|MSG12345|P|2.5
+PID|1||12345^^^HOSPITAL_A^MR||DOE^JOHN||19800102
+OBR|1|ORD200|ACC200|K^Potassium|||202608181400|||||||202608181423||||||||202608181451
+OBX|1|NM|K^Potassium||6.8|mmol/L|3.5-5.1|HH|||F
+```
+
+Conceptually, this transaction carries:
+
+```text
+Patient:            MRN 12345
+Order:              ORD200
+Accession:          ACC200
+Test:               Potassium
+Result:             6.8 mmol/L
+Interpretation:     Critical High
+Status:             Final
+Collection time:    14:00
+Lab receipt:        14:23
+Final/report time:  14:51
+Message ID:         MSG12345
+```
+
+A receiving system may acknowledge the transaction:
+
+```hl7
+MSA|AA|MSG12345
+```
+
+That acknowledgment is useful evidence that the receiving application accepted the message.
+
+It does **not**, by itself, prove that the result was:
+
+- filed to the correct patient
+- associated with the correct order
+- interpreted correctly
+- displayed correctly
+- routed through every required clinical workflow
+
+End-to-end validation continues beyond transmission.
+
+---
+
+## Silent Mapping Failure
+
+Some of the most important interface failures do not produce an obvious error.
+
+Consider:
+
+```text
+Provider orders:
+CBC with Differential
+
+EHR code:
+CBCDIFF
+
+Incorrect interface mapping:
+CBCDIFF → CBC
+
+LIS receives:
+CBC
+```
+
+The message may transmit successfully.
+
+The LIS may accept it.
+
+Testing may occur.
+
+Results may return.
+
+Yet the provider's original clinical intent has been changed.
+
+That makes semantic mapping failures particularly important because **technical success can hide clinical failure**.
+
+A mature validation approach checks:
+
+- source test code
+- target LIS code
+- test dictionary definition
+- expected components
+- downstream analyzer/workflow
+- returned result components
+
+---
+
+## Patient Identity Integrity
+
+An MRN is not merely a number.
+
+The identifier also exists within a namespace or assigning authority.
+
+```text
+12345 / HOSPITAL_A / MR
+```
+
+is not automatically equivalent to:
+
+```text
+12345 / HOSPITAL_B / MR
+```
+
+Validation should preserve the relationship between:
+
+```text
+Patient
+   ↓
+Order
+   ↓
+Specimen / accession
+   ↓
+Result
+```
+
+An ambiguous or inconsistent relationship should follow a defined exception workflow rather than silently filing against an uncertain patient record.
+
+---
+
+## Critical Result Integrity
+
+A result can be transmitted numerically correctly while losing clinically meaningful interpretation.
+
+Example:
+
+```text
+LIS:
+Potassium 6.8
+Critical High
+
+Expected interface:
+HH
+
+Received interpretation:
+H
+```
+
+The numerical result survived.
+
+The clinical meaning did not.
+
+> **Important distinction:** Preserving a critical interpretation such as `HH` does not by itself prove that the organization's critical-result notification workflow occurred.
+
+Interface data integrity and clinical escalation workflow are related but separate controls.
+
+---
+
+# Production Validation Mindset
+
+Finding the likely fix is not the same as safely deploying it.
+
+A production-oriented workflow should include:
+
+```text
+Reproduce defect
+      ↓
+Establish baseline
+      ↓
+Assess clinical/downstream risk
+      ↓
+Document configuration change
+      ↓
+Unit testing
+      ↓
+Integration testing
+      ↓
+Negative testing
+      ↓
+Regression testing
+      ↓
+Clinical/application signoff
+      ↓
+Controlled deployment
+      ↓
+Canary transactions
+      ↓
+Post-live verification
+      ↓
+Monitoring
+```
+
+Rollback criteria should be established before production change.
+
+### Example validation cases
+
+| Test | Expected outcome |
+|---|---|
+| Normal laboratory result | Correct patient, order, value and status |
+| Critical result | Critical interpretation preserved |
+| CBC with differential | Correct order mapping and all expected components |
+| Ambiguous patient identifier | Routes to defined exception handling |
+| Incorrect order/accession relationship | Does not silently auto-file |
+| Invalid test mapping | Fails safely or routes for review |
+| Existing unaffected tests | Continue working after change |
+| Production canary | End-to-end behavior matches validation |
+
+---
+
+# Design Principles Demonstrated
+
+### Find the last known-good state
+
+Do not guess which application is responsible.
+
+Trace the transaction until the first boundary where the information becomes incorrect.
+
+### Preserve clinical meaning
+
+A technically valid message can still represent the wrong patient, order, specimen, timestamp, interpretation, or test.
+
+### Segment before optimizing
+
+A system-wide average can hide one site, workflow, route, shift, or specimen population causing most of the deterioration.
+
+### Contain before correcting
+
+Protect the workflow first. Then establish root cause and implement the permanent fix.
+
+### Validate the failure path
+
+Testing only the happy path is insufficient for clinical systems.
+
+Know what happens when identifiers conflict, mappings fail, messages are rejected, or downstream systems are unavailable.
+
+### Measure the outcome after the change
+
+A configuration change is not finished when it is deployed.
+
+It is finished when post-change evidence demonstrates that the process remains reliable.
+
+---
+
+# About This Project
+
+This is a **synthetic portfolio case study** designed to demonstrate clinical-systems reasoning using realistic laboratory and HL7 workflows.
+
+No PHI or proprietary hospital data is used.
+
+The operational scenarios and performance results are simulated and are intended to demonstrate an approach to:
+
+- laboratory workflow investigation
+- LIS/EHR interoperability
+- interface validation
+- clinical data integrity
+- production change management
+- operational decision-making
+
+My laboratory background informs the clinical workflow and patient-safety perspective behind the project.
+
+---
+
+## Professional Focus
+
+I am interested in work at the intersection of **clinical laboratory operations and healthcare technology**, including:
+
+- LIS / laboratory systems
+- clinical applications
+- laboratory informatics
+- interface and integration support
+- instrument/middleware connectivity
+- implementation and validation
+- laboratory process improvement
+
+**ASCP-certified Medical Laboratory Technician (MLT)** with technical and analytical experience applying laboratory domain knowledge to systems-oriented problems.
+
+---
+
+## Core Skills
+
+`LIS` `HL7 v2` `EHR Interfaces` `ORU` `ACK` `Laboratory Workflow` `Clinical Applications` `Interface Validation` `Patient Identity` `Test Mapping` `Root Cause Analysis` `Change Control` `Regression Testing` `Healthcare IT`
